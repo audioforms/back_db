@@ -20,7 +20,7 @@ def new_form():
 
 @app.route('/af/api/response/new', methods=['POST'])
 def new_Response():
-    """Create a new form via api call."""
+    """Create a new form response via api call."""
     if not flask.request.json or not 'title' in flask.request.json:
         abort(400)
     response = tables.Response(
@@ -31,6 +31,17 @@ def new_Response():
     )
     tables.session.add(response)
     return flask.jsonify(tables.Response.seralize), 201
+
+@app.route('/af/api/user/new', methods=['POST'])
+def new_Response():
+    """Create a new user via api call."""
+    if not flask.request.json or not 'title' in flask.request.json:
+        abort(400)
+    user = tables.User(
+        title = flask.request.json.get('name',""),
+    )
+    tables.session.add(user)
+    return flask.jsonify(tables.User.seralize), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
