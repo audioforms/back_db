@@ -16,7 +16,7 @@ def new_form():
         permissions = flask.request.json.get('permissions', "0")
     )
     tables.session.add(form)
-    return flask.jsonify(tables.Form.seralize), 201
+    return flask.jsonify(tables.Form.serialize_list(form)), 201
 
 @app.route('/af/api/response/new', methods=['POST'])
 def new_Response():
@@ -30,7 +30,7 @@ def new_Response():
         permissions = flask.request.json.get('permissions', "0")
     )
     tables.session.add(response)
-    return flask.jsonify(tables.Response.seralize), 201
+    return flask.jsonify(tables.Response.serialize_list(response)), 201
 
 @app.route('/af/api/user/new', methods=['POST'])
 def new_Response():
@@ -41,7 +41,12 @@ def new_Response():
         title = flask.request.json.get('name',""),
     )
     tables.session.add(user)
-    return flask.jsonify(tables.User.seralize), 201
+    return flask.jsonify(tables.User.serialize_list(user)), 201
+
+@app.route('/af/api/form/<formid>')
+def  get_form(formid):
+    form = tables.session.query(Form).get(formid)
+    return flask.jsonify(tables.Form.serialize_list(form)), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
