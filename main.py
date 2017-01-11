@@ -33,7 +33,7 @@ def new_Response():
     return flask.jsonify(tables.Response.serialize_list(response)), 201
 
 @app.route('/af/api/user/new', methods=['POST'])
-def new_Response():
+def new_User():
     """Create a new user via api call."""
     if not flask.request.json or not 'title' in flask.request.json:
         abort(400)
