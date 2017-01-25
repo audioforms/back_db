@@ -35,7 +35,7 @@ class Question(BaseDoc):
     title = mongoengine.fields.StringField(required=True)
     datatype = mongoengine.fields.StringField(required=True)
     validation = mongoengine.fields.StringField()
-    default = mongoengine.fields.DynamicFields()
+    default = mongoengine.fields.DynamicField()
 
 
 class QuestionResponse(Question):
