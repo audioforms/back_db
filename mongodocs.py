@@ -1,5 +1,11 @@
 import abc
 import mongoengine
+# serialization with compatibility
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
 
 class BaseDoc(mongoengine.Document, abc.ABCMeta):
     """BaseDoc: Abstract Base Class for all document types."""
@@ -16,13 +22,17 @@ class BaseDoc(mongoengine.Document, abc.ABCMeta):
         # no one can see anything until we can authorize
         return False
 
-    def serialize(self):
-        """Return a serialization of the document."""
-        pass
+    def serialize_all(self):
+        """Return a serialization of all documents."""
+        jsonlist = []
+        for obj in self.objects:
+            jsonlist.append(obj.to_json())
+        return json.dumps(jsonlist)
 
     def yaml(self):
         """Return the yaml version of the document."""
         pass
+
 
 class Question(BaseDoc):
     """
@@ -36,6 +46,7 @@ class Question(BaseDoc):
     validation = mongoengine.fields.StringField()
     default = mongoengine.fields.DynamicFields()
 
+
 class QuestionResponse(Question):
     """
     Represents an answered question within a Response document.
@@ -43,6 +54,7 @@ class QuestionResponse(Question):
     Inhereted properties: title, datatype, validation, default
     """
     response = mongoengine.fields.DynamicField(required=True)
+
 
 class Form(BaseDoc):
     """
@@ -63,6 +75,7 @@ class Form(BaseDoc):
     created = mongoengine.fields.DateTimeField()
     pass
 
+
 class Response(Form):
     """
     Represents a filled out form document.
@@ -77,6 +90,7 @@ class Response(Form):
     content = mongoengine.fields.ListField(mongoengine.fields.ReferenceField(
         QuestionResponse))
     pass
+
 
 class User(BaseDoc):
     """
