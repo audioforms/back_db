@@ -1,3 +1,4 @@
 mongoengine
 flask
 Flask-Testing
+pyyaml
