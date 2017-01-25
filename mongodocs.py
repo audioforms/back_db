@@ -25,6 +25,21 @@ class BaseDoc(mongoengine.Document):
                          default_flow_style=False)
 
 
+class User(BaseDoc):
+    """
+    Represents a user document.
+    Properties: name, key, created
+    """
+    # define index and other information
+    meta = {'indexes': ['name']}
+
+    # define fields
+    name = mongoengine.fields.StringField(required=True, unique=True)
+    key = mongoengine.fields.StringField(required=True)
+    created = mongoengine.fields.DateTimeField()
+    pass
+
+
 class Question(BaseDoc):
     """
     Represents a question within a Form document.
@@ -80,21 +95,6 @@ class Response(Form):
     # change content base type because response
     content = mongoengine.fields.ListField(mongoengine.fields.ReferenceField(
         QuestionResponse))
-    pass
-
-
-class User(BaseDoc):
-    """
-    Represents a user document.
-    Properties: name, key, created
-    """
-    # define index and other information
-    meta = {'indexes': ['name']}
-
-    # define fields
-    name = mongoengine.fields.StringField(required=True, unique=True)
-    key = mongoengine.fields.StringField(required=True)
-    created = mongoengine.fields.DateTimeField()
     pass
 
 
