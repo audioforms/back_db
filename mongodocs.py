@@ -1,4 +1,3 @@
-import abc
 import mongoengine
 # serialization with compatibility
 try:
@@ -8,7 +7,7 @@ except ImportError:
 import yaml
 
 
-class BaseDoc(mongoengine.Document, abc.ABCMeta):
+class BaseDoc(mongoengine.Document):
     """BaseDoc: Abstract Base Class for all document types."""
 
     meta = {'abstract': True}
@@ -22,7 +21,23 @@ class BaseDoc(mongoengine.Document, abc.ABCMeta):
 
     def yaml_all(self):
         """Return the yaml version of the document."""
-        return yaml.dump(yaml.load(self.seralize_all), default_flow_style=False))
+        return yaml.dump(yaml.load(self.seralize_all),
+                         default_flow_style=False)
+
+
+class User(BaseDoc):
+    """
+    Represents a user document.
+    Properties: name, key, created
+    """
+    # define index and other information
+    meta = {'indexes': ['name']}
+
+    # define fields
+    name = mongoengine.fields.StringField(required=True, unique=True)
+    key = mongoengine.fields.StringField(required=True)
+    created = mongoengine.fields.DateTimeField()
+    pass
 
 
 class Question(BaseDoc):
@@ -35,7 +50,7 @@ class Question(BaseDoc):
     title = mongoengine.fields.StringField(required=True)
     datatype = mongoengine.fields.StringField(required=True)
     validation = mongoengine.fields.StringField()
-    default = mongoengine.fields.DynamicFields()
+    default = mongoengine.fields.DynamicField()
 
 
 class QuestionResponse(Question):
@@ -59,7 +74,7 @@ class Form(BaseDoc):
     # define fields
     owner = mongoengine.fields.ReferenceField(
         'User', reverse_delete_rule=mongoengine.CASCADE)
-    title = mongoengine.fields.StringField(required=True, unique_with=owner)
+    title = mongoengine.fields.StringField(required=True, unique_with=['owner'])
     viewers = mongoengine.fields.ListField(
         mongoengine.fields.ReferenceField(
             'User', reverse_delete_rule=mongoengine.CASCADE))
@@ -83,19 +98,5 @@ class Response(Form):
     pass
 
 
-class User(BaseDoc):
-    """
-    Represents a user document.
-    Properties: name, key, created
-    """
-    # define index and other information
-    meta = {'indexes': ['name']}
-
-    # define fields
-    name = mongoengine.fields.StringField(required=True, unique=True)
-    key = mongoengine.fields.StringField(required=True)
-    created = mongoengine.fields.DateTimeField()
-    pass
-
-
 # start host/connection
+mongoengine.connect('faudapi')
