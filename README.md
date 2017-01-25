@@ -1,5 +1,5 @@
 # fAudApi
-[![Build Status](https://travis-ci.org/formsaudio/back_db.svg?branch=master)](https://travis-ci.org/formsaudio/back_db)
+[![Build Status](https://travis-ci.org/formsaudio/fAudApi.svg?branch=master)](https://travis-ci.org/formsaudio/fAudApi)
 
 faAPI is the *F*orms *Aud*io *A*pplication *P*rogramming *I*nterface
 
