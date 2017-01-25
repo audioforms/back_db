@@ -99,3 +99,4 @@ class User(BaseDoc):
 
 
 # start host/connection
+mongoengine.connect('faudapi')
