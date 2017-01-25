@@ -5,7 +5,7 @@ try:
     import json
 except ImportError:
     import simplejson as json
-import pyyaml as yaml
+import yaml
 
 
 class BaseDoc(mongoengine.Document, abc.ABCMeta):
