@@ -140,18 +140,46 @@ def new_User():
         return flask.jsonify(user.to_json), 201
 
 
-@app.route('/faudapi/form/<formid>')
+@app.route('/faudapi/get/forms')
 def get_form(formid):
     """Get a form json from api."""
-    form = docs.Form.objects(id=formid)
-    return flask.jsonify(form.to_json), 201
+    req = flask.request.get_json()
+    if not req:
+        flask.abort(400, "JSON improperly transmitted.")
+    # parse the response, give errors if needed
+    try:
+        formid = req['id']
+    except KeyError:
+        flask.abort(400, "Title of response desired was not included.")
+    owner = auth(req)
+    resp = docs.Form.objects(id=formid).first()
+    if (owner and owner in resp.viewers) or (not resp.viewers):
+        # if the owner is logged in and can view, or if it's public
+        # public is empty viewer list
+        return flask.jsonify(resp.to_json), 201
+    else:
+        flask.abort(401)
 
 
-@app.route('/faudapi/response/<formid>')
+@app.route('/faudapi/get/responses', methods=['POST'])
 def get_form_resp(respid):
-    """Get a form json from api."""
-    resp = docs.FormResponse.objects(id=respid)
-    return flask.jsonify(resp.to_json), 201
+    """Get a form response json from api."""
+    req = flask.request.get_json()
+    if not req:
+        flask.abort(400, "JSON improperly transmitted.")
+    # parse the response, give errors if needed
+    try:
+        respid = req['id']
+    except KeyError:
+        flask.abort(400, "Title of response desired was not included.")
+    owner = auth(req)
+    resp = docs.FormResponse.objects(id=respid).first()
+    if (owner and owner in resp.viewers) or (not resp.viewers):
+        # if the owner is logged in and can view, or if it's public
+        # public is empty viewer list
+        return flask.jsonify(resp.to_json), 201
+    else:
+        flask.abort(401)
 
 
 if __name__ == '__main__':
