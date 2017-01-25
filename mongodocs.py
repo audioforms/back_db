@@ -74,7 +74,7 @@ class Form(BaseDoc):
     # define fields
     owner = mongoengine.fields.ReferenceField(
         'User', reverse_delete_rule=mongoengine.CASCADE)
-    title = mongoengine.fields.StringField(required=True, unique_with=owner)
+    title = mongoengine.fields.StringField(required=True, unique_with=['owner'])
     viewers = mongoengine.fields.ListField(
         mongoengine.fields.ReferenceField(
             'User', reverse_delete_rule=mongoengine.CASCADE))
