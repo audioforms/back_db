@@ -5,6 +5,7 @@ try:
     import json
 except ImportError:
     import simplejson as json
+import yaml
 
 
 class BaseDoc(mongoengine.Document, abc.ABCMeta):
@@ -29,9 +30,9 @@ class BaseDoc(mongoengine.Document, abc.ABCMeta):
             jsonlist.append(obj.to_json())
         return json.dumps(jsonlist)
 
-    def yaml(self):
+    def yaml_all(self):
         """Return the yaml version of the document."""
-        pass
+        return yaml.dump(yaml.load(self.seralize_all), default_flow_style=False))
 
 
 class Question(BaseDoc):
