@@ -1,7 +1,7 @@
 import unittest
 from flask import Flask
 from flask_testing import TestCase
-from main_doc import *
+from fAudApi import *
 
 class MyTest(TestCase):
     def create_app(self):
