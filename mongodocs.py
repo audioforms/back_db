@@ -13,16 +13,6 @@ class BaseDoc(mongoengine.Document, abc.ABCMeta):
 
     meta = {'abstract': True}
 
-    def unique(self):
-        """Check uniqueness of document in context."""
-        # no one can see anything until we can authroize
-        pass
-
-    def authorized(self, user):
-        """Check if use of the document is authorized."""
-        # no one can see anything until we can authorize
-        return False
-
     def serialize_all(self):
         """Return a serialization of all documents."""
         jsonlist = []
