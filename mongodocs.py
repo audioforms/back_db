@@ -1,4 +1,3 @@
-import abc
 import mongoengine
 # serialization with compatibility
 try:
@@ -8,7 +7,7 @@ except ImportError:
 import yaml
 
 
-class BaseDoc(mongoengine.Document, abc.ABCMeta):
+class BaseDoc(mongoengine.Document):
     """BaseDoc: Abstract Base Class for all document types."""
 
     meta = {'abstract': True}
