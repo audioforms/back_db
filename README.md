@@ -5,53 +5,53 @@ faAPI is the *F*orms *Aud*io *A*pplication *P*rogramming *I*nterface
 
 fAudApi handles document storage, retrieval, database configuration, authorization, and audit for the FormsAudio site
 
-#api documentation#
+#API documentation#
 
-### authentication notes ###
+### Authentication Notes ###
 (almost) every request should have a username and authkey field corresponding to an existing user
 a 401 error will come back if authentication is valid but not sufficient
 
-### 400 notes ###
+### 400 Notes ###
 the application returns a 400 when a necessary field is missing.
 
-### new form ###
+### New Form ###
 Note that an empty viewers list implies public. Include yourself to make it private.
 ```json
 {
     "username": "birm",
     "authkey": "<AUTHKEY>",
     "title": "FormsAudio Sample",
-    "content": {
-        "question": {
+    "content": [
+        {
             "title": "What day is today?",
             "datatype": "string",
             "validation": "none"
         }
-    },
+    ],
     "viewers": []
 }
 ```
 
-### new form response###
+### New Form Response###
 Note that an empty viewers list implies public. Include yourself to make it private.
 ```json
 {
     "username": "birm",
     "authkey": "<AUTHKEY>",
     "title": "FormsAudio Sample Response",
-    "content": {
-        "question": {
+    "content": [
+        {
             "title": "What day is today?",
             "response": "Wednesday",
             "datatype": "string",
             "validation": "none"
         }
-    },
+    ],
     "viewers": []
 }
 ```
 
-### new user ###
+### New User ###
 New user does not require authentication, for obvious reasons
 ```json
 {
@@ -59,7 +59,7 @@ New user does not require authentication, for obvious reasons
 }
 ```
 
-### find form by id ###
+### Find Form by ID ###
 ```json
 {
     "username": "birm",
@@ -68,7 +68,7 @@ New user does not require authentication, for obvious reasons
 }
 ```
 
-### find response by id ###
+### Find Response by ID ###
 ```json
 {
     "username": "birm",
@@ -76,3 +76,4 @@ New user does not require authentication, for obvious reasons
     "id": "some_object_id"
 }
 ```
+
