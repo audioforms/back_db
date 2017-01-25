@@ -22,7 +22,8 @@ class BaseDoc(mongoengine.Document, abc.ABCMeta):
 
     def yaml_all(self):
         """Return the yaml version of the document."""
-        return yaml.dump(yaml.load(self.seralize_all), default_flow_style=False))
+        return yaml.dump(yaml.load(self.seralize_all),
+                         default_flow_style=False)
 
 
 class Question(BaseDoc):
