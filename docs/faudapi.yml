@@ -3,7 +3,7 @@
 swagger: '2.0'
 info:
   title: fAudApi
-  description: Move your app forward with the Uber API
+  description: Make and respond to forms without touching a thing. Good for busy hands or natural interaction. 
   version: "alpha"
 # the domain of the service
 host: api.forms.audio
