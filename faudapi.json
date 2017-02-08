@@ -1,0 +1,417 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "fAudApi",
+        "description": "Make and respond to forms without touching a thing. Good for busy hands or natural interaction.",
+        "version": "alpha"
+    },
+    "host": "api.forms.audio",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/faudapi",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/get/forms": {
+            "get": {
+                "summary": "A form by ID",
+                "description": "Get a form object by ID\n",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username with sufficient permission",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "authkey",
+                        "in": "query",
+                        "description": "auth key for the given user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "the desired object id.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "forms"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array containing the desired form, or empty",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Form"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Necessary Key",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Necessary Authentication Information",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/get/responses": {
+            "get": {
+                "summary": "A form response by ID",
+                "description": "Get a form response object by ID\n",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username with sufficient permission",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "authkey",
+                        "in": "query",
+                        "description": "auth key for the given user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "the desired object id.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "responses"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array containing the desired form, or empty",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Response"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Necessary Key",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Necessary Authentication Information",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/new": {
+            "get": {
+                "summary": "Create a new user",
+                "description": "Create a new user and get an authkey for that user.\n",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username with sufficient permission",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "users"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array containing the desired form, or empty",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Necessary Key",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/forms/new": {
+            "get": {
+                "summary": "Create a new Form",
+                "description": "Create a new Form\n",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username with sufficient permission",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "authkey",
+                        "in": "query",
+                        "description": "auth key for the given user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "viewers",
+                        "in": "query",
+                        "description": "a list of viewers by username",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "content",
+                        "in": "query",
+                        "description": "the questions",
+                        "required": true,
+                        "type": "array",
+                        "items": [
+                            {
+                                "name": "title",
+                                "in": "query",
+                                "description": "The question's title (the question)",
+                                "required": true,
+                                "type": "string"
+                            },
+                            {
+                                "name": "datatype",
+                                "in": "query",
+                                "description": "The expected data type of the result",
+                                "required": true,
+                                "type": "string"
+                            },
+                            {
+                                "name": "validation",
+                                "in": "query",
+                                "description": "Additional validation requested",
+                                "required": true,
+                                "type": "string"
+                            }
+                        ]
+                    }
+                ],
+                "tags": [
+                    "forms"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array containing the desired form, or empty",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Response"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Necessary Key",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Necessary Authentication Information",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/responses/new": {
+            "get": {
+                "summary": "Create a new Form response",
+                "description": "Create a new Form response\n",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username with sufficient permission",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "authkey",
+                        "in": "query",
+                        "description": "auth key for the given user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "viewers",
+                        "in": "query",
+                        "description": "a list of viewers by username",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "content",
+                        "in": "query",
+                        "description": "the questions and answers",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/QuestionResponse"
+                        }
+                    }
+                ],
+                "tags": [
+                    "responses"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array containing the desired form, or empty",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Response"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Necessary Key",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Necessary Authentication Information",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Form": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "description": "username with sufficient permission",
+                    "type": "string"
+                },
+                "viewers": {
+                    "description": "a list of viewers by username",
+                    "type": "array"
+                },
+                "content": {
+                    "description": "the questions",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Question"
+                    }
+                }
+            }
+        },
+        "Response": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "description": "username with sufficient permission",
+                    "type": "string"
+                },
+                "viewers": {
+                    "description": "a list of viewers by username",
+                    "type": "array"
+                },
+                "content": {
+                    "description": "the questions and answers",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/QuestionResponse"
+                    }
+                }
+            }
+        },
+        "Question": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "description": "The question's title (the question)",
+                    "type": "string"
+                },
+                "datatype": {
+                    "description": "The expected data type of the result",
+                    "type": "string"
+                },
+                "validation": {
+                    "description": "Additional validation requested",
+                    "type": "string"
+                }
+            }
+        },
+        "QuestionResponse": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "description": "The question's title (the question)",
+                    "type": "string"
+                },
+                "response": {
+                    "description": "The question's response (the answer)",
+                    "type": "string"
+                },
+                "datatype": {
+                    "description": "The expected data type of the result",
+                    "type": "string"
+                },
+                "validation": {
+                    "description": "Additional validation requested",
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "description": "Username name of the user."
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
